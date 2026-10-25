@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gerhana — gerhana matahari di Indonesia, 1900–2100</title>
+    <meta
+      name="description"
+      content="Setiap gerhana matahari yang terlihat dari Indonesia dari 1900 sampai 2100, dihitung untuk 514 kabupaten/kota: peta ketertutupan, jam dan jalannya gerhana di daerahmu, dan jalur total serta cincin."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://gerhana-id.vercel.app/" />
+    <meta property="og:title" content="Gerhana — gerhana matahari di Indonesia, 1900–2100" />
+    <meta property="og:description" content="Kapan Matahari tertutup Bulan di daerahmu? Semua gerhana matahari 1900–2100 untuk 514 kabupaten/kota." />
+    <meta property="og:image" content="https://gerhana-id.vercel.app/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://gerhana-id.vercel.app/" />
+    <meta name="theme-color" content="#f5f3ee" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#101217" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/ikon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="kepala">
+      <a class="merek" href="/"><span class="logo" aria-hidden="true"></span>Gerhana</a>
+      <nav><a href="#daerah">Di daerahmu</a><a href="#peta">Peta</a><a href="#jalur">Jalur total</a><a href="#tentang">Tentang</a></nav>
+    </header>
+
+    <main>
+      <section class="pembuka" aria-labelledby="judul">
+        <div class="pembuka-teks">
+          <p class="label">Gerhana matahari di Indonesia · 1900–2100</p>
+          <h1 id="judul" data-judul>Gerhana matahari di Indonesia</h1>
+          <p class="lead" data-lead></p>
+          <ul class="angka-kunci" data-kunci></ul>
+        </div>
+        <figure class="pembuka-gambar">
+          <div class="piringan" id="piringan-pembuka"></div>
+          <figcaption data-keterangan-pembuka></figcaption>
+        </figure>
+      </section>
+
+      <section class="bagian" id="daerah" aria-labelledby="judul-daerah">
+        <p class="label">Di daerahmu</p>
+        <h2 id="judul-daerah">Seperti apa gerhananya dari <em data-nama-daerah>sini</em>?</h2>
+        <div class="cari">
+          <label for="cari-daerah">Kabupaten/kota</label>
+          <input id="cari-daerah" type="search" autocomplete="off" placeholder="Ketik nama daerah…" role="combobox" aria-expanded="false" aria-controls="saran" aria-autocomplete="list" />
+          <ul id="saran" class="saran" role="listbox" hidden></ul>
+        </div>
+        <div class="lokal">
+          <div class="lokal-gambar">
+            <div class="piringan" id="piringan-lokal"></div>
+            <div class="kendali" data-kendali>
+              <button type="button" class="putar" data-putar aria-label="Putar jalannya gerhana">▶</button>
+              <input type="range" id="geser-waktu" min="0" max="1000" value="500" aria-label="Waktu selama gerhana" />
+              <output data-jam-geser></output>
+            </div>
+          </div>
+          <div class="lokal-teks" aria-live="polite">
+            <p class="kalimat" data-kalimat-lokal></p>
+            <dl class="fase" data-fase></dl>
+            <p class="catatan" data-catatan-lokal></p>
+          </div>
+        </div>
+        <h3 class="judul-grafik" data-judul-sebaran>Semua gerhana matahari, 1900–2100</h3>
+        <p class="ket-grafik">Satu titik satu gerhana, setinggi bagian Matahari terbesar yang tertutup dan terlihat. Klik titik untuk melihatnya.</p>
+        <ul class="legenda legenda-titik" aria-hidden="true">
+          <li><span class="titik-legenda j1"></span>sebagian</li>
+          <li><span class="titik-legenda j2"></span>cincin</li>
+          <li><span class="titik-legenda j3"></span>total</li>
+        </ul>
+        <div class="grafik" id="sebaran"></div>
+      </section>
+
+      <section class="bagian" id="peta" aria-labelledby="judul-peta">
+        <p class="label">Peta</p>
+        <h2 id="judul-peta">Seberapa tertutup Matahari di <em>setiap daerah</em></h2>
+        <div class="pilih-gerhana">
+          <button type="button" data-geser="-1" aria-label="Gerhana sebelumnya">←</button>
+          <select id="pilih-gerhana" aria-label="Pilih gerhana"></select>
+          <button type="button" data-geser="1" aria-label="Gerhana berikutnya">→</button>
+        </div>
+        <p class="pengantar" data-ringkasan-peta></p>
+        <ul class="legenda" data-legenda></ul>
+        <div class="grafik peta" id="wadah-peta" role="img"></div>
+        <p class="ket-grafik">
+          Warna menunjukkan bagian Matahari terbesar yang tertutup selama Matahari masih di atas ufuk, dihitung di satu titik
+          tengah tiap kabupaten/kota. Klik wilayah untuk melihat gerhana dari sana.
+        </p>
+      </section>
+
+      <section class="bagian" id="jalur" aria-labelledby="judul-jalur">
+        <p class="label">Jalur total dan cincin</p>
+        <h2 id="judul-jalur">Saat bayangan Bulan <em>menyapu</em> Indonesia</h2>
+        <p class="pengantar" data-pengantar-jalur></p>
+        <div class="tabel-gulir">
+          <table class="tabel-jalur">
+            <thead>
+              <tr><th scope="col">Tanggal</th><th scope="col">Jenis</th><th scope="col" class="angka">Kab/kota</th><th scope="col">Provinsi yang dilalui</th></tr>
+            </thead>
+            <tbody data-tabel-jalur></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="bagian tentang" id="tentang" aria-labelledby="judul-tentang">
+        <h2 id="judul-tentang">Tentang perhitungan</h2>
+        <ul>
+          <li class="peringatan">
+            <strong>Jangan menatap Matahari tanpa pelindung</strong>, juga saat gerhana sebagian atau cincin. Pakai kacamata
+            gerhana berstandar ISO 12312-2 atau cara tak langsung seperti kamera lubang jarum. Hanya pada detik-detik total
+            Matahari aman dilihat langsung.
+          </li>
+          <li>
+            Posisi Matahari dan Bulan dihitung di peramban dan dalam skrip data dengan pustaka
+            <a href="https://github.com/cosinekitty/astronomy">Astronomy Engine</a> (Don Cross, lisensi MIT), yang akurat
+            sekitar satu menit busur. Setiap kabupaten/kota diwakili satu titik di tengah wilayahnya, jadi daerah luas bisa
+            hanya sebagian masuk jalur total.
+          </li>
+          <li>
+            Jam dalam WIB, WITA, atau WIT menurut pembagian zona sekarang, juga untuk gerhana lampau. Untuk tanggal jauh ke
+            masa lalu atau masa depan, ketidakpastian putaran Bumi (ΔT) bisa menggeser jam dan tepi jalur beberapa detik
+            hingga menit, dan durasi total di dekat tepi jalur sangat peka terhadap hal itu.
+          </li>
+          <li>
+            Gerhana dihitung terlihat bila Matahari di atas ufuk saat gerhana mulai atau berakhir. Ketertutupan adalah bagian
+            luas piringan Matahari yang tertutup Bulan saat puncak; bila puncaknya terjadi setelah Matahari terbenam atau
+            sebelum terbit, peta dan grafik memakai ketertutupan saat Matahari terbenam atau terbit. Topografi dan ketinggian tempat diabaikan.
+          </li>
+          <li>Batas wilayah: geoBoundaries ADM2 (CC BY 3.0 IGO). Untuk pengumuman resmi gerhana di Indonesia, rujukannya BMKG.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="kaki">
+      <p>Dibuat oleh Rafi Fernandito · <a href="https://github.com/Reverseflash45/gerhana">kode sumber</a></p>
+    </footer>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
