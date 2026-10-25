@@ -2,7 +2,7 @@
 
 ![Gerhana: gerhana matahari total berikutnya di Indonesia, 20 April 2042](public/og.png)
 
-**[Buka Gerhana](https://gerhana-id.vercel.app)**
+**[Buka Gerhana](https://gerhana.raffstw.my.id)**
 
 Setiap gerhana matahari yang terlihat dari Indonesia dari 1900 sampai 2100, dihitung untuk 514
 kabupaten/kota. Ada 121 gerhana; 17 di antaranya melintaskan jalur total dan 19 jalur cincin.
