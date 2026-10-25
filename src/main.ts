@@ -1,5 +1,6 @@
-import "@fontsource/instrument-serif";
-import "@fontsource-variable/inter-tight";
+import "@fontsource-variable/bodoni-moda/opsz.css";
+import "@fontsource-variable/bodoni-moda/opsz-italic.css";
+import "@fontsource-variable/jost";
 import "@fontsource-variable/jetbrains-mono";
 import "./gaya.css";
 import {

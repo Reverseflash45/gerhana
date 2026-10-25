@@ -1,61 +1,35 @@
 :root {
-  color-scheme: light;
-  --kertas: #f5f3ee;
-  --kertas-2: #ebe8e0;
-  --tinta: #15161c;
-  --tinta-2: #44464f;
-  --samar: #686a72;
-  --garis: #dcd8cf;
-  --garis-kuat: #b9b5ab;
-  --aksen: #a64f0b;
-  --sorot: #2a5bd7;
-  /* peta: sebagian per 20% (satu rona biru), cincin, total */
-  --k0: #e2ded5;
-  --k1: #b7d3f6;
-  --k2: #86b6ef;
-  --k3: #5598e7;
-  --k4: #2a78d6;
-  --k5: #1c5cab;
-  --cincin: #e08a1e;
-  --total: #15161c;
-  --sebagian: #2a78d6;
+  /* almanak langit malam: biru pekat, korona keemasan */
+  color-scheme: dark;
+  --kertas: #080c1e;
+  --kertas-2: #11173a;
+  --tinta: #e8e6f0;
+  --tinta-2: #c2c3d6;
+  --samar: #9496b3;
+  --garis: #1e2547;
+  --garis-kuat: #353e6b;
+  --aksen: #f6e7bd;
+  --sorot: #8fb0ff;
+  /* peta: sebagian per 20% (satu rona biru, divalidasi ordinal di atas --k0), cincin, total */
+  --k0: #1c2340;
+  --k1: #2a62b8;
+  --k2: #3b7fd9;
+  --k3: #5f9df0;
+  --k4: #8dbcf6;
+  --k5: #bdd8fa;
+  --cincin: #f0a43a;
+  --total: #fff4d6;
+  --sebagian: #5f9df0;
   /* piringan */
-  --langit: #9ec4ea;
-  --langit-gelap: #0b1430;
+  --langit: #3f6d9e;
+  --langit-gelap: #05070f;
   --matahari: #f7b733;
-  --bulan: #3a3d4a;
+  --bulan: #191b22;
   --korona: #fff4d6;
-  --tanah: #4a5a43;
-  --judul: "Instrument Serif", Georgia, serif;
-  --huruf: "Inter Tight Variable", system-ui, sans-serif;
+  --tanah: #1f271d;
+  --judul: "Bodoni Moda Variable", Didot, Georgia, serif;
+  --huruf: "Jost Variable", system-ui, sans-serif;
   --mono: "JetBrains Mono Variable", ui-monospace, monospace;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --kertas: #101217;
-    --kertas-2: #1a1d24;
-    --tinta: #eeece6;
-    --tinta-2: #c3c5cc;
-    --samar: #8f929b;
-    --garis: #262a33;
-    --garis-kuat: #3a3f4a;
-    --aksen: #f0a43a;
-    --sorot: #8fb0ff;
-    --k0: #2a2e37;
-    --k1: #184f95;
-    --k2: #256abf;
-    --k3: #3987e5;
-    --k4: #6da7ec;
-    --k5: #9ec5f4;
-    --cincin: #f0a43a;
-    --total: #f6f1e4;
-    --sebagian: #6da7ec;
-    --langit: #3f6d9e;
-    --langit-gelap: #05070f;
-    --bulan: #191b22;
-    --tanah: #1f271d;
-  }
 }
 
 *,
@@ -65,9 +39,15 @@
 }
 body {
   margin: 0;
-  background: var(--kertas);
   color: var(--tinta);
   font: 400 17px/1.6 var(--huruf);
+  /* bintang tipis di langit halaman */
+  background:
+    radial-gradient(1px 1px at 8% 12%, rgb(255 255 255 / 0.6) 50%, transparent 51%) 0 0 / 420px 420px,
+    radial-gradient(1px 1px at 62% 38%, rgb(255 255 255 / 0.4) 50%, transparent 51%) 0 0 / 420px 420px,
+    radial-gradient(1.2px 1.2px at 33% 77%, rgb(207 216 255 / 0.5) 50%, transparent 51%) 0 0 / 420px 420px,
+    radial-gradient(1px 1px at 88% 64%, rgb(255 255 255 / 0.35) 50%, transparent 51%) 0 0 / 300px 300px,
+    var(--kertas);
 }
 a {
   color: inherit;
@@ -96,8 +76,10 @@ select {
 h1,
 h2 {
   font-family: var(--judul);
-  font-weight: 400;
+  font-weight: 500;
+  font-style: italic;
   letter-spacing: -0.01em;
+  text-wrap: balance;
 }
 h1 {
   margin: 14px 0 0;
@@ -111,7 +93,9 @@ h2 {
 }
 h1 em,
 h2 em {
+  font-style: normal;
   color: var(--aksen);
+  text-shadow: 0 0 26px rgb(246 231 189 / 0.35);
 }
 
 .kepala,
