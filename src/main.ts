@@ -25,6 +25,7 @@ import {
   teksTanggal,
   zona,
 } from "./gerhana";
+import { htmlTetangga } from "./tetangga";
 import { LEGENDA, type TitikDaerah, esc, gambarPeta, gambarPiringan, gambarSebaran, muatPeta } from "./vis";
 
 const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector<T>(s)!;
@@ -197,7 +198,9 @@ function isiDaerah() {
     `${titik.length} gerhana matahari terlihat dari ${daerah.nama}, ${data.rentang[0]}–${data.rentang[1]}` +
     (hitung(3) || hitung(2) ? `: ${[hitung(3) && `${hitung(3)} total`, hitung(2) && `${hitung(2)} cincin`].filter(Boolean).join(", ")}` : "");
   gambarSebaran($("#sebaran"), titik, gerhanaI, SEKARANG, z, pilihGerhana);
+  $("[data-tetangga]").innerHTML = htmlTetangga(daerah.id, daerah.nama, "gerhana");
 }
+
 
 /* ---------- putar ---------- */
 const tombolPutar = $<HTMLButtonElement>("[data-putar]");

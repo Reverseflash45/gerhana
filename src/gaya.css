@@ -389,6 +389,23 @@ main,
   font-size: 15px;
   color: var(--tinta-2);
 }
+.tetangga {
+  margin: 28px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--garis-kuat);
+  max-width: 72ch;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--samar);
+}
+.tetangga a {
+  color: var(--tinta-2);
+  text-underline-offset: 3px;
+}
+.tetangga a:hover {
+  color: var(--aksen);
+}
+
 .catatan button {
   padding: 0;
   border: 0;
