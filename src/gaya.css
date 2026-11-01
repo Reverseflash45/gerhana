@@ -197,6 +197,13 @@ main,
   display: flex;
   justify-content: center;
 }
+/* pesan tempat piringan (420×420) sebelum SVG-nya dibuat */
+.piringan:empty::before {
+  content: "";
+  display: block;
+  width: min(420px, 100%);
+  aspect-ratio: 1;
+}
 .piringan svg {
   display: block;
   max-width: 100%;
