@@ -41,10 +41,9 @@ function daftar(xs: string[], batas = 4): string {
 const besar = (s: string) => s[0].toUpperCase() + s.slice(1);
 
 /* ---------- muat ---------- */
-const [data, peta] = await Promise.all([
-  fetch(`${import.meta.env.BASE_URL}data/gerhana.json`).then((r) => r.json() as Promise<DataGerhana>),
-  muatPeta(),
-]);
+const data = await fetch(`${import.meta.env.BASE_URL}data/gerhana.json`).then((r) => r.json() as Promise<DataGerhana>);
+// Peta 514 daerah berat digambar; baru dimuat saat bagiannya hampir terlihat (lihat bagian "mulai").
+let peta: Awaited<ReturnType<typeof muatPeta>> | null = null;
 if (data.daerah.some((id, i) => DAERAH[i].id !== id)) throw new Error("Urutan daerah di data gerhana tidak cocok");
 const RINGKAS: Ringkasan[] = data.gerhana.map(ringkas);
 const tanggalKunci = (r: Ringkasan) => r.g.t.slice(0, 10);
@@ -274,7 +273,7 @@ function isiPeta() {
         (r.jumlah[1] ? `, dan tertutup sebagian di ${angka(r.jumlah[1])} lainnya.` : ".");
   $("[data-ringkasan-peta]").textContent = kalimat + (r.jumlah[0] ? ` Dari ${angka(r.jumlah[0])} kabupaten/kota lainnya, gerhana ini tidak terlihat sama sekali.` : "");
   $("#wadah-peta").setAttribute("aria-label", `Peta ketertutupan Matahari per kabupaten/kota pada ${tgl}. ${kalimat}`);
-  gambarPeta($("#wadah-peta"), peta, r.g, daerah.id, pilihDaerahDariPeta);
+  if (peta) gambarPeta($("#wadah-peta"), peta, r.g, daerah.id, pilihDaerahDariPeta);
 }
 
 /* ---------- jalur ---------- */
@@ -386,7 +385,24 @@ function gambarSemua() {
 }
 gambarSemua();
 
-let lebarTerakhir = document.body.clientWidth;
+const io = "IntersectionObserver" in window
+  ? new IntersectionObserver(
+      (isi) => {
+        if (!isi.some((e) => e.isIntersecting)) return;
+        io?.disconnect();
+        void muatPeta().then((p) => {
+          peta = p;
+          isiPeta();
+        });
+      },
+      { rootMargin: "250px 0px" },
+    )
+  : null;
+if (io) io.observe($("#peta"));
+else void muatPeta().then((p) => ((peta = p), isiPeta()));
+
+let lebarTerakhir
+ = document.body.clientWidth;
 new ResizeObserver(() => {
   const w = document.body.clientWidth;
   if (w === lebarTerakhir) return;

@@ -707,3 +707,8 @@ main,
     min-width: 200px;
   }
 }
+
+/* Peta dimuat saat hampir terlihat; pesan tingginya dulu supaya isi di bawahnya tidak bergeser. */
+#wadah-peta:empty {
+  aspect-ratio: 1000 / 388;
+}
