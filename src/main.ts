@@ -7,6 +7,7 @@ import {
   DAERAH,
   INDEKS,
   NAMA_JENIS,
+  PEMBUKA,
   type DataGerhana,
   type Daerah,
   type Lokal,
@@ -23,13 +24,15 @@ import {
   teksDurasi,
   teksJam,
   teksTanggal,
+  totalTerlama,
   zona,
 } from "./gerhana";
 import { htmlTetangga } from "./tetangga";
 import { LEGENDA, type TitikDaerah, esc, gambarPeta, gambarPiringan, gambarSebaran, muatPeta } from "./vis";
 
 const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector<T>(s)!;
-const angka = (n: number) => n.toLocaleString("id-ID");
+/** Pemisah ribuan id-ID tanpa Intl: membangun formatter ICU pertama kali memakan puluhan ms di HP. */
+const angka = (n: number) => (Number.isInteger(n) ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ".") : n.toLocaleString("id-ID"));
 const SEKARANG = new Date();
 
 /** "Aceh, Sumatera Utara, dan Riau", dipotong bila lebih dari `batas` (tapi tidak menyisakan "1 provinsi lain"). */
@@ -88,16 +91,9 @@ function pembukaGambar(): (() => void) | null {
   const iTotal = RINGKAS.findIndex((r) => r.jumlah[3] && r.tanggal > SEKARANG);
   if (iTotal < 0) return null;
   const r = RINGKAS[iTotal];
-  let paling: { d: Daerah; l: Lokal; lama: number } | null = null;
-  r.g.v.forEach((n, i) => {
-    if (buka(n).jenis !== 3) return;
-    const l = lokal(DAERAH[i], r.tanggal);
-    if (!l?.totalMulai || !l.totalSelesai) return;
-    const lama = l.totalSelesai.ut.getTime() - l.totalMulai.ut.getTime();
-    if (!paling || lama > paling.lama) paling = { d: DAERAH[i], l, lama };
-  });
+  const paling = tanggalKunci(r) === PEMBUKA.tanggal ? (totalTerlama(r, PEMBUKA.daerah) ?? totalTerlama(r)) : totalTerlama(r);
   if (!paling) return null;
-  const { d, l, lama } = paling as { d: Daerah; l: Lokal; lama: number };
+  const { d, l, lama } = paling;
   const z = zona(d);
   const tengah = new Date((l.totalMulai!.ut.getTime() + l.totalSelesai!.ut.getTime()) / 2);
   $("[data-keterangan-pembuka]").textContent = `${d.nama}, ${teksTanggal(tengah, z)} pukul ${teksJam(tengah, z)} ${namaZona(z)}: total selama ${teksDurasi(lama)}.`;

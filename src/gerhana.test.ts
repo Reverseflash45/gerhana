@@ -1,6 +1,7 @@
 import * as A from "astronomy-engine";
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { buka, daerahDariId, luasTertutup, lokal, persen, piringan, teksDurasi, teksJam, teksTanggal, zona } from "./gerhana";
+import { PEMBUKA, buka, daerahDariId, ringkas, totalTerlama, luasTertutup, lokal, persen, piringan, teksDurasi, teksJam, teksTanggal, zona } from "./gerhana";
 
 /** Puncak global gerhana matahari pertama setelah tanggal itu. */
 const puncakSetelah = (iso: string) => A.SearchGlobalSolarEclipse(A.MakeTime(new Date(iso))).peak.date;
@@ -91,5 +92,16 @@ describe("kode dan teks", () => {
     expect(persen(0.004)).toBe("<1%");
     expect(persen(0.9996)).toBe("100%");
     expect(persen(0.884)).toBe("88%");
+  });
+});
+
+describe("gambar pembuka", () => {
+  it("PEMBUKA sama dengan hasil pencarian penuh untuk gerhana total berikutnya", () => {
+    const data = JSON.parse(readFileSync("public/data/gerhana.json", "utf8"));
+    const r = data.gerhana.map(ringkas).find((x: ReturnType<typeof ringkas>) => x.g.t.startsWith(PEMBUKA.tanggal))!;
+    expect(r.jumlah[3]).toBeGreaterThan(0);
+    const penuh = totalTerlama(r)!;
+    expect(penuh.d.id).toBe(PEMBUKA.daerah);
+    expect(totalTerlama(r, PEMBUKA.daerah)!.lama).toBe(penuh.lama);
   });
 });

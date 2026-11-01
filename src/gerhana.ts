@@ -80,6 +80,27 @@ export const lokal = (d: Daerah, t: Date): Lokal | null => lokalDi(d.titik[1], d
 /** Posisi tampak Matahari dan Bulan dari daerah itu pada waktu `t`. */
 export const piringan = (d: Daerah, t: Date): Piringan => piringanDi(d.titik[1], d.titik[0], t);
 
+/**
+ * Hasil totalTerlama untuk gerhana total berikutnya (dicek ulang di gerhana.test.ts). Mencari ulang semua daerah
+ * yang dilintasi totalitas memakan sekitar setengah detik di HP, jadi selama gerhana itu belum lewat, gambar
+ * pembuka cukup menghitung daerah ini.
+ */
+export const PEMBUKA = { tanggal: "2042-04-20", daerah: "kab-sambas" };
+
+/** Daerah dengan totalitas terlama pada sebuah gerhana; `calon` membatasi pencarian ke satu daerah. */
+export function totalTerlama(r: Ringkasan, calon?: string): { d: Daerah; l: Lokal; lama: number } | null {
+  const iCalon = calon ? INDEKS.get(calon) : undefined;
+  let paling: { d: Daerah; l: Lokal; lama: number } | null = null;
+  r.g.v.forEach((n, i) => {
+    if ((iCalon != null && i !== iCalon) || buka(n).jenis !== 3) return;
+    const l = lokal(DAERAH[i], r.tanggal);
+    if (!l?.totalMulai || !l.totalSelesai) return;
+    const lama = l.totalSelesai.ut.getTime() - l.totalMulai.ut.getTime();
+    if (!paling || lama > paling.lama) paling = { d: DAERAH[i], l, lama };
+  });
+  return paling;
+}
+
 /* ---------- teks ---------- */
 const BULAN = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
 const BULAN_PENDEK = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
