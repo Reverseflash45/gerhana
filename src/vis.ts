@@ -121,7 +121,7 @@ export function gambarPiringan(wadah: HTMLElement, p: Piringan): number {
   const id = `p${++nomorPiringan}`;
   // Langit baru benar-benar gelap saat total; sebelum itu hanya meredup sedikit, terasa di atas sekitar 85%.
   const gelap = total ? 1 : 0.6 * Math.max(0, (tertutup - 0.75) / 0.25) ** 3;
-  wadah.innerHTML = `<svg viewBox="0 0 ${ukuran} ${ukuran}" width="${ukuran}" height="${ukuran}" role="img">
+  wadah.innerHTML = `<svg viewBox="0 0 ${ukuran} ${ukuran}" width="${ukuran}" height="${ukuran}" aria-hidden="true">
     <defs>
       <clipPath id="${id}-bingkai"><rect width="${ukuran}" height="${ukuran}" rx="18"/></clipPath>
       <clipPath id="${id}-matahari"><circle cx="${c}" cy="${c}" r="${R}"/></clipPath>
